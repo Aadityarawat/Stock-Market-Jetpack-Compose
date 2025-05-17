@@ -1,7 +1,10 @@
 package com.example.stockmarketapp.data.repository
 
+import com.example.stockmarketapp.data.csv.CSVParser
+import com.example.stockmarketapp.data.csv.CompanyListingParser
 import com.example.stockmarketapp.data.local.StockDatabase
 import com.example.stockmarketapp.data.mapper.toCompanyListing
+import com.example.stockmarketapp.data.mapper.toCompanyListingEntity
 import com.example.stockmarketapp.data.remote.dto.StockApi
 import com.example.stockmarketapp.domain.model.CompanyListing
 import com.example.stockmarketapp.domain.repository.StockRepository
@@ -16,7 +19,8 @@ import javax.inject.Singleton
 @Singleton
 class StockRepositoryImpl @Inject constructor(
     val api: StockApi,
-    val db: StockDatabase
+    val db: StockDatabase,
+    val companyListingParser: CSVParser<CompanyListing>
 ): StockRepository{
 
     private val dao = db.dao
@@ -40,15 +44,29 @@ class StockRepositoryImpl @Inject constructor(
 
             val remoteListings = try {
                 val response = api.getListing()
-                response.byteStream()
+                companyListingParser.parse(response.byteStream())
             }catch (e: IOException){
                 e.printStackTrace()
                 emit(Resource.Error("Couldn't load data"))
+                null
             }catch (e: HttpException){
                 e.printStackTrace()
                 emit(Resource.Error("Couldn't load data"))
+                null
             }
 
+            remoteListings?.let { listing ->
+                dao.clearCompanyListings()
+                dao.insertCompanyListing(
+                    listing.map { it.toCompanyListingEntity() }
+                )
+                emit(Resource.Success(
+                    data = dao
+                        .searchCompanyListing("")
+                        .map { it.toCompanyListing() }
+                ))
+                emit(Resource.Loading(false))
+            }
         }
     }
 
