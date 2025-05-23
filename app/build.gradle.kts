@@ -15,7 +15,7 @@ android {
         minSdk = 27
         targetSdk = 35
         versionCode = 1
-        versionName = "1.0"
+        versionName = "1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -70,8 +70,8 @@ dependencies {
     implementation("com.google.accompanist:accompanist-swiperefresh:0.24.2-alpha")
 
     // Optional: Compose Destinations (if used)
-    implementation("io.github.raamcosta.compose-destinations:core:1.9.42-beta")
-    ksp("io.github.raamcosta.compose-destinations:ksp:1.9.42-beta")
+    implementation("io.github.raamcosta.compose-destinations:core:2.2.0")
+    ksp("io.github.raamcosta.compose-destinations:ksp:2.2.0")
 
     // Dagger Hilt
     implementation("com.google.dagger:hilt-android:2.56.2")
@@ -90,4 +90,8 @@ dependencies {
     ksp("androidx.room:room-compiler:2.7.1")
     //Kotlin extension and coroutine support for room
     implementation("androidx.room:room-ktx:2.7.1")
+}
+
+ksp {
+    arg("compose-destinations.codeGenPackageName", "com.example.stockmarketapp")
 }
