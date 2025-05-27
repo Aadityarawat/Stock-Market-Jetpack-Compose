@@ -17,7 +17,7 @@ abstract class RepositoryModule {
 
     @Binds
     @Singleton
-    abstract fun bindCompanyListingParser(
+    abstract fun bindCompanyListingsParser(
         companyListingParser: CompanyListingParser
     ): CSVParser<CompanyListing>
 
