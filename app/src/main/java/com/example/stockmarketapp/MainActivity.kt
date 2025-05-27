@@ -18,8 +18,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.stockmarketapp.presentation.company_listings.CompanyListingScreen
 import com.example.stockmarketapp.ui.theme.StockMarketAppTheme
-import com.ramcosta.composedestinations.DestinationsNavHost
-import com.ramcosta.composedestinations.spec.NavGraphSpec
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

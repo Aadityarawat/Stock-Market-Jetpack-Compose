@@ -92,7 +92,3 @@ dependencies {
     //Kotlin extension and coroutine support for room
     implementation("androidx.room:room-ktx:2.7.1")
 }
-
-ksp {
-    arg("compose-destinations.codeGenPackageName", "com.example.stockmarketapp")
-}

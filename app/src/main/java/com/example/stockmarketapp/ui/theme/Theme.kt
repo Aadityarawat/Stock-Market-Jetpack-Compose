@@ -13,7 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Color.White,
+    primary = Color.Green,
     background = DarkBlue,
     onPrimary = Color.DarkGray,
     onBackground = TextWhite
@@ -39,7 +39,7 @@ fun StockMarketAppTheme(
     }
 
     MaterialTheme(
-        colorScheme = colorScheme,
+        colorScheme = DarkColorScheme,
         typography = Typography,
         content = content
     )
