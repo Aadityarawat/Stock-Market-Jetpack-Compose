@@ -15,7 +15,7 @@ class CompanyListingParser @Inject constructor(): CSVParser<CompanyListing> {
         val csvReader = CSVReader(InputStreamReader(stream))
         return withContext(Dispatchers.IO){
             csvReader.readAll()
-                .drop(0)
+                .drop(1)
                 .mapNotNull { line ->
                     val symbol = line.getOrNull(0)
                     val name = line.getOrNull(1)
