@@ -30,14 +30,38 @@ class CompanyinfoViewModel @Inject constructor(
 
             when(val result = companyInfoResult.await()){
                 is Resource.Error -> {
-
+                    state = state.copy(
+                        company = null,
+                        isLoading = false,
+                        error = result.message
+                    )
                 }
                 is Resource.Success -> {
-
+                    state = state.copy(
+                        company = result.data,
+                        isLoading = false,
+                        error = null
+                    )
                 }
-                else -> {
+                else -> Unit
+            }
 
+            when(val result = intradayInfoResult.await()){
+                is Resource.Error -> {
+                    state = state.copy(
+                        company = null,
+                        isLoading = false,
+                        error = result.message
+                    )
                 }
+                is Resource.Success -> {
+                    state = state.copy(
+                        stockInfos = result.data ?: emptyList(),
+                        isLoading = false,
+                        error = null
+                    )
+                }
+                else -> Unit
             }
         }
     }
