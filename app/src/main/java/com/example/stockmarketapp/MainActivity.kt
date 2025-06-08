@@ -13,9 +13,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.example.stockmarketapp.presentation.company_info.CompanyInfoScreen
 import com.example.stockmarketapp.presentation.company_listings.CompanyListingScreen
 import com.example.stockmarketapp.ui.theme.StockMarketAppTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,6 +37,14 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     NavHost(navController = navController, startDestination = "home") {
                         composable("home") { CompanyListingScreen(navController) }
+
+                        composable(
+                            route = "{symbol}",
+                            arguments = listOf(navArgument("symbol") { type = NavType.StringType })
+                        ) { backStackEntry ->
+                            val symbol = backStackEntry.arguments?.getString("symbol") ?: ""
+                            CompanyInfoScreen(symbol = symbol)
+                        }
                     }
                 }
             }
