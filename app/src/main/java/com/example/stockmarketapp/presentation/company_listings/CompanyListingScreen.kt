@@ -20,6 +20,7 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 @Composable
 fun CompanyListingScreen(
     navigator: NavHostController,
+    modifier: Modifier,
     viewModel: CompanyListingViewModel = hiltViewModel()
 ){
     val swipeRefreshState = rememberSwipeRefreshState(
@@ -28,7 +29,7 @@ fun CompanyListingScreen(
     val state = viewModel.state
 
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize()
     ) {
         OutlinedTextField(
             value = state.searchQuery,
@@ -62,7 +63,7 @@ fun CompanyListingScreen(
                         company = company,
                         modifier = Modifier.fillMaxWidth()
                             .clickable {
-                                navigator.navigate(company.symbol)
+                                navigator.navigate("company_info/${company.symbol}")
                             }
                             .padding(16.dp)
                     )

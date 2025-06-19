@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -30,16 +31,21 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             StockMarketAppTheme {
-                Surface (
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
+                Scaffold (
+                    modifier = Modifier.fillMaxSize()
+                        .background(color = MaterialTheme.colorScheme.background)
+                ) { innerPadding ->
                     val navController = rememberNavController()
                     NavHost(navController = navController, startDestination = "home") {
-                        composable("home") { CompanyListingScreen(navController) }
+                        composable("home") {
+                            CompanyListingScreen(
+                                navController,
+                                modifier = Modifier.padding(innerPadding)
+                            )
+                        }
 
                         composable(
-                            route = "{symbol}",
+                            route = "company_info/{symbol}",
                             arguments = listOf(navArgument("symbol") { type = NavType.StringType })
                         ) { backStackEntry ->
                             val symbol = backStackEntry.arguments?.getString("symbol") ?: ""
